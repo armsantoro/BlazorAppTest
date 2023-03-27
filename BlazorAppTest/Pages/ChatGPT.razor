@@ -1,0 +1,30 @@
+﻿@page "/chatgpt"
+
+<PageTitle>Chat GPT</PageTitle>
+
+@using BlazorAppTest.Data
+@using System.Threading.Tasks
+@inject ChatGptService chatGptService
+
+<h1>Chat GPT</h1>
+
+<div>
+    <label for="prompt">Prompt:</label>
+    <input type="text" id="prompt" @bind="@prompt" />
+    <button @onclick="@(async () => await SendMessage())">Send</button>
+</div>
+
+<div>
+    <label for="response">Response:</label>
+    <p id="response">@response</p>
+</div>
+
+@code {
+    private string prompt = "";
+    private string response = "";
+
+    private async Task SendMessage()
+    {
+        response = await chatGptService.GetResponseChatGpt(prompt);
+    }
+}
